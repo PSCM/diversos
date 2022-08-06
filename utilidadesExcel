@@ -1,0 +1,42 @@
+# contar o número de células com uma cor específica
+Function contarCor(range_data As range, criteria As range) As Long
+    Dim datax As range
+    Dim xcolor As Long
+xcolor = criteria.Interior.ColorIndex
+For Each datax In range_data
+    If datax.Interior.ColorIndex = xcolor Then
+        contarCor = contarCor + 1
+    End If
+Next datax
+End Function
+
+# remover caracteres especiais
+Function RemoverAcento(Caract As String)
+ Dim A As String
+ Dim B As String
+ Dim i As Integer
+ Const AccChars = "ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðñòóôõöùúûüýÿ#$%()^*&!/?.;,:^-_$¨@#%*+{}[]'©"
+ Const RegChars = "SZszYAAAAAACEEEEIIIIDNOOOOOUUUUYaaaaaaceeeeiiiidnooooouuuuyy"
+ For i = 1 To Len(AccChars)
+ A = Mid(AccChars, i, 1)
+ B = Mid(RegChars, i, 1)
+ Caract = Replace(Caract, A, B)
+ Next
+ RemoverAcento = Caract
+End Function
+
+# extrair hyperlink
+Sub Extracthyperlinks()
+'Updateby Extendoffice
+Dim Rng As Range
+Dim WorkRng As Range
+On Error Resume Next
+xTitleId = "KutoolsforExcel"
+Set WorkRng = Application.Selection
+Set WorkRng = Application.InputBox("Range", xTitleId, WorkRng.Address, Type:=8)
+For Each Rng In WorkRng
+    If Rng.Hyperlinks.Count > 0 Then
+        Rng.Value = Rng.Hyperlinks.Item(1).Address
+    End If
+Next
+End Sub
